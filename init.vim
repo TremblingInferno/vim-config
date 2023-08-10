@@ -45,7 +45,9 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 		Plug 'vim-pandoc/vim-pandoc-syntax'
 		Plug 'christoomey/vim-system-copy'
 		Plug 'tpope/vim-fugitive'
-call plug#end()
+		Plug 'nathanlong/vim-colors-writer'
+call plug#end() 
+
 
 let g:pandoc#syntax#style#emphases = 1
 let g:pandoc#syntax#conceal#blacklist = ['quotes', 'ellipses', 'newline']
@@ -80,8 +82,9 @@ function! DispWordCount()
 		au! CursorHold,CursorHoldI * call UpdateWordCount()
 	augroup END
 
-	highlight User1 ctermbg=green guibg=green ctermfg=black guifg=black
-	set statusline=%=			" separator from left to right justified
+	set statusline=%#comment#
+	set statusline+=%=			" separator from left to right justified
+	set statusline+=%#WildMenu#
 	set statusline+=\ %{WordCount()}\ words
 endfunction
 
@@ -95,6 +98,9 @@ function! Normal_environment()
 	set nospell
 	set relativenumber
 	set number
+	set notermguicolors
+	colorscheme elflord
+	set background=dark
 endfunction
 
 function! Prose_mode()
@@ -102,6 +108,9 @@ function! Prose_mode()
 	Goyo
 	set norelativenumber
 	set nonumber
+	set termguicolors
+	colorscheme writer
+	set background=light
 endfunction
 
 function! Writing_environment()
@@ -144,4 +153,5 @@ endfunction
 
 :autocmd VimLeavePre ~/Documents/GitShared/gitjournal/[^.]* call ExitVim()
 
+nnoremap <Leader>n :let &bg=(&bg=='light'?'dark':'light')<CR>
 
